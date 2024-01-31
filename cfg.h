@@ -1,0 +1,6 @@
+#define PROTO_PLANT_TYPE "Spinach"
+#define IDEAL_SOIL_MOISTURE 50.0
+#define IDEAL_TEMP 30.0
+#define IDEAL_HUMIDITY 50.0
+#define LCD_ROWS 2
+#define LCD_COLS 16
