@@ -1,6 +1,6 @@
 # BloomBot
-![BloomBot Prototype](res/prototype.png)
-![Our Team](res/team.png)
+<img src="res/prototype.png" height=200px alt="BloomBot Prototype">
+<a href="https://www.instagram.com/p/C2ynv64Lxc6"> <img src="res/team.png" height=300px" alt="Our team"> </a>
 
 BloomBot is a smart pot designed for urban farming with accesibility in mind.
 
