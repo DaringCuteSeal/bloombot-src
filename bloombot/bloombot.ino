@@ -1,5 +1,5 @@
 // Kode Prototype PJBL Future Founders
-// Written by DaringCuteSeal (https://github.com/DaringCuteSeal/BloomBot)
+// Written by DaringCuteSeal (https://github.com/DaringCuteSeal/BloomBot-src)
 
 // Libraries
 
