@@ -1,9 +1,33 @@
 #ifndef LCD_H
 #define LCD_H
 
-#include <Arduino.h>
+#include <LiquidCrystal_I2C.h>
+#include <Wire.h>
+#include "cfg.h"
+#include "sensors.h"
+#include <Ticker.h>
+#include "timekeeping.h"
 
-// Base renderer class
+enum LCDContextState
+{
+    HOME,
+    STATS
+};
+
+extern LiquidCrystal_I2C lcd;
+
+enum Status
+{
+    HEALTHY,
+    NEEDS_SUNLIGHT,
+    TOO_HOT,
+    TOO_COLD,
+    TOO_HUMID, // air humidity
+    TOO_DRY,
+    SOIL_TOO_HUMID,
+    SOIL_TOO_DRY
+};
+
 class LCDScreenRenderer
 {
 public:
@@ -12,54 +36,28 @@ public:
 };
 
 String multiply_string(byte amount, char character);
-
-enum class Status
-{
-    HEALTHY,
-    NEEDS_SUNLIGHT,
-    TOO_HOT,
-    TOO_COLD,
-    TOO_HUMID,
-    TOO_DRY,
-    SOIL_TOO_HUMID,
-    SOIL_TOO_DRY
-};
-
 Status get_plant_status(float temperature, float humidity, float soil_moisture);
-
 String get_string_from_status(Status status);
+void render_home_screen(float temperature, float humidity, float soil_moisture);
+String get_menu_item_label(byte idx);
+String get_menu_item_value(byte idx);
+void render_stats_menu(String label, String value, byte idx, byte max_idx);
 
-// Renders home screen. Also handles power-saving feature by turning off the screen when not in use
-class HomeRenderer : public LCDScreenRenderer
-{
-public:
-    HomeRenderer();
+void lcd_render();
 
-    void render_screen() override;
+void lcd_update();
 
-    void update_state() override;
+void lcd_btn_menu_handler(Button &btn);
 
-    void turn_screen_on();
+void lcd_btn_menu_hold_handler(Button &btn, uint16_t duration);
 
-    void turn_screen_off();
+void lcd_btn_left_handler(Button &btn);
 
-private:
-    bool _lcd_status;
-    float _cached_temperature;
-    float _cached_humidity;
-    float _cached_soil_moisture;
-};
+void lcd_btn_right_handler(Button &btn);
 
-class LCDScreenManager
-{
-public:
-    LCDScreenManager(void (*renderer)());
+void init_lcd();
 
-    void set_renderer(void (*renderer)());
-    void render();
+void turn_off_lcd();
 
-private:
-    LCDScreenRenderer *renderer;
-};
-
-#endif // LCD_H
+LCDContextState get_context();
+#endif
